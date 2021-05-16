@@ -4,12 +4,17 @@ main.py
   A simple console based chatbot that uses control flow and conditionals to provide
   pre-defined choices and responses.
 """
+
 from utils import (
   print_error_message, 
   get_size, 
   order_mocha, 
   order_latte
 )
+
+from orders_list import get_current_order_number
+
+print(get_current_order_number())
 
 # Main Coffee Bot Function:
 def coffee_bot():
