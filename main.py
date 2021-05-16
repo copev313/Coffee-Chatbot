@@ -4,42 +4,47 @@ main.py
   A simple console based chatbot that uses control flow and conditionals to provide
   pre-defined choices and responses.
 """
+from utils import (
+  print_error_message, 
+  get_size, 
+  order_mocha, 
+  order_latte
+)
 
-# Define your functions
+# Main Coffee Bot Function:
 def coffee_bot():
   # Welcome Message!
   print("\n=== Welcome to the Cafe! ===\n")
-  size = get_size()
-  drink_type = get_drink_type()
-  # Order Summary:
-  print(f"\nAlright, that's a {size} {drink_type}!")
+
+  # List of drink names:
+  drinks = []
+  order_drink = 'y'
+  # Loop to allow multiple drink orders:
+  while (order_drink == 'y'):
+    size = get_size()
+    drink_type = get_drink_type()
+    drink = f"{size} {drink_type}"
+    # Add drink to list:
+    drinks.append(drink)
+    print(f"\nAlright, that'll be one {drink}!\n")
+  
+    # Order another drink?
+    while True:
+      order_drink = input("Would you like to order another drink? (y/n) >>> ")
+      if (order_drink.lower() in ['y', 'n']):
+        break
+
+  # Review the drinks in the order:
+  review = "\nOkay, so I have:\n"
+  for d in drinks:
+    review += " - ({}) {}\n".format(1, d)
+    # TODO: Implement quantity to count the same drinks.
+  print(review)
+
   # Gather the User's Name:
   name = input("\nCan I get you name please? >>> ")
   # Conclusion Message:
   print(f"\nThanks, {name}! Your order will be ready shortly.\n\n")
-
-
-# Ask for the drink size:
-def get_size():
-  res = input("""What size drink can I get for you?
-  [s] Small
-  [m] Medium
-  [l] Large
-\n>>> """
-  )
-  # Force to lowercase:
-  res = res.lower()
-  # Determine selection:
-  if (res == 's'):
-    return 'Small'
-  elif (res == 'm'):
-    return 'Medium'
-  elif (res == 'l'):
-    return 'Large'
-  # Handle invalid input:
-  else:
-    print_error_message()
-    return get_size()
 
 
 # Ask for drink type:
@@ -49,13 +54,18 @@ def get_drink_type():
   [2] Mocha
   [3] Latte
 \n>>> """)
-  # Force to integer:
-  res = int(res)
+  # Force to integer + Handle non-ints:
+  try:
+    res = int(res)
+  except:
+    print_error_message()
+    return get_drink_type()
+
   # Determine selection:
   if (res == 1):
     return 'Brewed Coffee'
   elif (res == 2):
-    return 'Mocha'
+    return order_mocha()
   elif (res == 3):
     return order_latte()
   # Handle invalid input:
@@ -64,33 +74,5 @@ def get_drink_type():
     return get_drink_type()
 
 
-# Ask milk type for latte:
-def order_latte():
-  res = input("""And what kind of milk for your latte?
-  [a] 2% milk
-  [b] Non-fat milk
-  [c] Soy milk
-\n>>> """)
-  # Force to lowercase:
-  res = res.lower()
-  # Determine selection:
-  if (res == 'a'):
-    return "Latte with 2% milk"
-  elif (res == 'b'):
-    return "Latte with Non-fat milk"
-  elif (res == 'c'):
-    return "Latte with Soy milk"
-  # Handle invalid input:
-  else:
-    print_error_message()
-    return order_latte()
-
-
-
-# Sorry, invalid selection message:
-def print_error_message():
-  print("I'm sorry, I did not understand your selection.\nPlease enter the corresponding letter for your response.\n")
-
-
-# Start our bot!
+# Start up our bot!
 coffee_bot()
