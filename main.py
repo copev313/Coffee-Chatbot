@@ -4,7 +4,7 @@ main.py
   A simple console based chatbot that uses control flow and conditionals to provide
   pre-defined choices and responses.
 """
-
+# Import Utility Functions:
 from utils import (
   print_error_message, 
   get_size, 
@@ -12,9 +12,10 @@ from utils import (
   order_latte
 )
 
-from orders_list import get_current_order_number
+# Import Order Operation Functions:
+from order_operations import get_current_order_number
 
-print(get_current_order_number())
+print(get_current_order_number())  # debug!
 
 # Main Coffee Bot Function:
 def coffee_bot():
@@ -23,7 +24,10 @@ def coffee_bot():
 
   # List of drink names:
   drinks = []
+  
+  # Initialize as 'yes' for first drink:
   order_drink = 'y'
+  
   # Loop to allow multiple drink orders:
   while (order_drink == 'y'):
     size = get_size()
@@ -58,8 +62,8 @@ def get_drink_type():
   [1] Brewed Coffee
   [2] Mocha
   [3] Latte
-\n>>> """)
-  # Force to integer + Handle non-ints:
+  \n>>> """)
+  # Force to integer & Handle non-ints:
   try:
     res = int(res)
   except:
